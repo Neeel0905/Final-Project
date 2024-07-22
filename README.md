@@ -22,7 +22,7 @@
 
 **Products Schema (MongoDB)**
 
-- "_id": "ObjectId"
+- "id": "ObjectId"
 - "name": "String"
 - "description": "String"
 - "price": "Number"
@@ -33,14 +33,28 @@
   
 **Users Schema (MongoDB)**
 
--  "_id": "ObjectId",
-- "username": "String",
-- "email": "String",
-- "password": "String",
-- "firstName": "String",
-- "lastName": "String",
-- "createdAt": "Date",
-- "updatedAt": "Date",
+- "id": "ObjectId"
+- "username": "String"
+- "email": "String"
+- "password": "String"
+- "firstName": "String"
+- "lastName": "String"
+- "createdAt": "Date"
+- "updatedAt": "Date"
+
+**Order Schema(MongoDB)**
+
+- id": "ObjectId"
+-"userId": "ObjectId"
+-"items": "String"
+-"totalAmount": "Number"
+-"status": "String"
+-"createdAt": "Date"
+-"updatedAt": "Date"
+-"shippingAddress": "String"
+-"paymentDetails": "String"
+
+  
 ### Frontend Setup
 
 1. Basic structure set up for React components, including directories for components and services.
