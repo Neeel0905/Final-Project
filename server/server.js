@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 
-mongoose.connect('your_mongodb_uri', {
+mongoose.connect('mongodb+srv://neelfinal:abc123123@final.s39tm01.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
