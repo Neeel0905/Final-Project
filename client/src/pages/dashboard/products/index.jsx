@@ -10,6 +10,18 @@ import { useNavigate } from 'react-router-dom';
 const { Meta } = Card;
 const { Option } = Select;
 
+const categories = [
+  { label: 'All', value: 'All' },
+  { label: 'Smartphones', value: 'Smartphones' },
+  { label: 'Laptops', value: 'Laptops' },
+  { label: 'Tablets', value: 'Tablets' },
+  { label: 'Audio', value: 'Audio' },
+  { label: 'Wearables', value: 'Wearables' },
+  { label: 'Entertainment', value: 'Entertainment' },
+  { label: 'Accessories', value: 'Accessories' },
+  { label: 'Desktops', value: 'Desktops' },
+];
+
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/products');
   return data;
@@ -32,6 +44,7 @@ export default function ProductsPage() {
   });
 
   const [quantities, setQuantities] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const handleQuantityChange = (productId, value) => {
     setQuantities((prevQuantities) => ({
@@ -52,6 +65,14 @@ export default function ProductsPage() {
     AddToCartApi.mutateAsync(payload);
   };
 
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+  };
+
+  const filteredProducts = selectedCategory === 'All'
+    ? products
+    : products.filter(product => product.category === selectedCategory);
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -66,8 +87,21 @@ export default function ProductsPage() {
 
   return (
     <div className="p-6">
+      <Row justify="end" className="mb-4">
+        <Select
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          style={{ width: 200 }}
+        >
+          {categories.map(category => (
+            <Option key={category.value} value={category.value}>
+              {category.label}
+            </Option>
+          ))}
+        </Select>
+      </Row>
       <Row gutter={[16, 16]}>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Col xs={24} sm={12} md={8} lg={6} key={product._id}>
             <Card
               hoverable
@@ -82,7 +116,7 @@ export default function ProductsPage() {
                 <Button
                   type="text"
                   icon={<Icon icon={eyeIcon} style={{ fontSize: '24px' }} />}
-                  onClick={() => navigate('/dashboard/product-details', {state: { productId: product._id }})}
+                  onClick={() => navigate('/dashboard/product-details', { state: { productId: product._id } })}
                 />,
               ]}
             >
