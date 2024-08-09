@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import eyeIcon from '@iconify/icons-mdi/eye';
 import axiosInstance from '../../../axiosInstance';
 import { jwtDecode } from '../../../utils/jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const { Meta } = Card;
 const { Option } = Select;
@@ -20,6 +21,7 @@ const addToCartBE = async (credentials) => {
 };
 
 export default function ProductsPage() {
+  const navigate = useNavigate();
   const { data: products, isLoading, error } = useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
@@ -73,14 +75,14 @@ export default function ProductsPage() {
                 <img
                   alt={product.name}
                   src={product.productImage}
-                  style={{ width: '100%', height: '200px', objectFit: 'cover' }} // Set image size and fit
+                  style={{ width: '100%', height: '200px', objectFit: 'cover' }}
                 />
               }
               extra={[
                 <Button
                   type="text"
                   icon={<Icon icon={eyeIcon} style={{ fontSize: '24px' }} />}
-                  onClick={() => console.log(`View product ${product._id}`)} // Handle view product action
+                  onClick={() => navigate('/dashboard/product-details', {state: { productId: product._id }})}
                 />,
               ]}
             >

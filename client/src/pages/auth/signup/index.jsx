@@ -38,7 +38,7 @@ const SignUpPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <Card title="Sign Up" style={{ width: 600 }}> {/* Adjusted card width */}
+      <Card title="Sign Up" style={{ width: 600 }}>
         <Formik
           initialValues={signupInitialValues}
           validationSchema={signupValidationSchema}

@@ -13,13 +13,6 @@ export default function DashboardLayout() {
         <div className="text-white text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>
           ND
         </div>
-        {/* <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items1}
-          style={{ flex: 1, minWidth: 0 }}
-        /> */}
         <Menu 
           theme="dark" 
           mode="horizontal" 
