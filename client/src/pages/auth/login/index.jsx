@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import { Card, Button, Input, Form, message } from 'antd';
 import { useMutation } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom';
 import { loginInitialValues, loginValidationSchema } from './formHelper';
 import axiosInstance from '../../../axiosInstance';
 import { useEffect } from 'react';
