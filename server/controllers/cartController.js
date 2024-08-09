@@ -22,7 +22,6 @@ exports.getCarts = async (req, res) => {
     }
 };
 
-// Get a cart by ID
 exports.getCartById = async (req, res) => {
     try {
         const { email } = req.params;
@@ -36,11 +35,24 @@ exports.getCartById = async (req, res) => {
 
         const cartItems = await CartItem.find({ cartID: cart._id }).populate('productId');
 
-        res.status(200).json({ cart, cartItems });
+        // Calculate subtotal
+        const subtotal = cartItems.reduce((acc, item) => {
+            return acc + item.productId.price * item.quantity;
+        }, 0);
+
+        // Calculate tax (13% of subtotal)
+        const tax = subtotal * 0.13;
+
+        // Calculate total (subtotal + tax)
+        const total = subtotal + tax;
+
+        res.status(200).json({ cart, cartItems, subtotal, tax, total });
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving or creating cart', error });
     }
 };
+
+
 
 // Update a cart by ID
 exports.updateCartById = async (req, res) => {
