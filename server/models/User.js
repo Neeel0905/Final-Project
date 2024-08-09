@@ -6,7 +6,8 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     mobile: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    userType: { type: String, enum: ['customer', 'admin'], default: 'customer', required: true } // Adding userType field
 }, { timestamps: true });
 
 const User = model('User', userSchema);
