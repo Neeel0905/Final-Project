@@ -11,7 +11,7 @@ const orderSchema = new Schema({
     phoneNumber: { type: String, required: true },
     creditCardNumber: { type: String, required: true },
     nameOnCard: { type: String, required: true },
-    expiryDate: { type: String, required: true },
+    expiryDate: { type: Date, required: true },
     cvv: { type: String, required: true }
 }, { timestamps: true });
 

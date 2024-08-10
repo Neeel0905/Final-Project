@@ -52,6 +52,22 @@ exports.getCartById = async (req, res) => {
     }
 };
 
+exports.updateCartStatus = async (req, res) => {
+  try {
+    const { cartID } = req.params;
+    const { cartActive } = req.body;
+
+    const cart = await Cart.findByIdAndUpdate(cartID, { cartActive }, { new: true });
+
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+    res.status(200).json({ message: 'Cart status updated successfully', cart });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating cart status', error });
+  }
+};
 
 
 // Update a cart by ID

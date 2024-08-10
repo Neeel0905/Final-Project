@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, InputNumber, Row, Col, Divider, Typography, Card } from 'antd';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axiosInstance';
 import { jwtDecode } from '../../../utils/jwt-decode';
 
@@ -10,7 +10,7 @@ const { Title } = Typography;
 const fetchCartItems = async () => {
   const decoded = jwtDecode(localStorage.getItem('accessToken'));
   const { data } = await axiosInstance.get(`/carts/${decoded.email}`);
-  return data; // Return the entire data object to include subtotal, total, etc.
+  return data;
 };
 
 const updateCartItemQuantity = async ({ cartItemId, quantity }) => {
@@ -24,14 +24,10 @@ const removeCartItem = async (cartItemId) => {
 
 export default function CartViewPage() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { data = {}, isLoading, refetch } = useQuery({
     queryKey: ['cartItems'],
     queryFn: fetchCartItems,
-    onSuccess: (data) => {
-      console.log(data); // Check if the data contains the total value
-    },
   });
 
   const updateCartItemMutation = useMutation({
@@ -125,7 +121,7 @@ export default function CartViewPage() {
         <Row justify="end">
           <Col>
             <Button
-              onClick={() => navigate('/dashboard/cart/checkout')}
+              onClick={() => navigate('/dashboard/cart/checkout', { state: { cartID: data?.cart?._id } })}
               type="primary"
               className="mt-5 mr-0"
             >

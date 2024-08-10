@@ -9,6 +9,9 @@ const Signup = lazy(() => import('../pages/auth/signup'));
 const ProductsList = lazy(() => import('../pages/dashboard/products'));
 const ProductDetails = lazy(() => import('../pages/dashboard/product-details'));
 const Cart = lazy(() => import('../pages/dashboard/cart'));
+const Checkout = lazy(() => import('../pages/dashboard/checkout'));
+const AdminPage = lazy(() => import('../pages/dashboard/admin'));
+const EditProductPage = lazy(() => import('../pages/dashboard/EditProductPage'));
 
 export default function Router() {
   return (
@@ -28,9 +31,11 @@ export default function Router() {
           }
         >
           <Route index element={<Navigate to="products" replace />} />
-          
+          <Route path="edit-product" element={<EditProductPage />} />
           <Route path="products" element={<ProductsList />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="admin" element={<AdminPage />} />
+          <Route path="cart/checkout" element={<Checkout />} />
           <Route path="product-details" element={<ProductDetails />} />
         </Route>
 
