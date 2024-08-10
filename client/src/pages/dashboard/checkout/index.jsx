@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Divider, Input, Button, DatePicker } from 'antd';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +20,15 @@ export default function CheckoutPage() {
   const { state } = useLocation();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const decode = jwtDecode(localStorage.getItem('accessToken'));
+    if (decode?.userType === 'admin') {
+      navigate('/dashboard/admin');
+    } else if (state?.cartID) {
+      navigate('/dashboard/cart');
+    }
+  }, []);
 
   const { data: cartItems, isLoading } = useQuery({
     queryKey: ['cartItems'],

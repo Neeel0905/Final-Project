@@ -38,7 +38,10 @@ export default function DashboardLayout() {
           onClick={(e) => navigate(e.key)}
         >
           {decoded.userType === 'admin' ? (
-            <Menu.Item key="/dashboard/admin">Admin</Menu.Item>
+            <>
+              <Menu.Item key="/dashboard/admin">Admin</Menu.Item>
+              <Menu.Item key="/dashboard/products">Products</Menu.Item>
+            </>
           ) : (
             <>
               <Menu.Item key="/dashboard/products">Products</Menu.Item>
