@@ -12,7 +12,7 @@ const cartItemRoutes = require('./routes/cartItemRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 const mongodbUri = process.env.DB_URI || 'mongodb+srv://neelfinal:abc123123@final.s39tm01.mongodb.net/';
 
 app.use(bodyParser.json());
