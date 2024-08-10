@@ -13,4 +13,6 @@ router.put('/carts/:id', cartController.updateCartById);
 
 router.delete('/carts/:id', cartController.deleteCartById);
 
+router.put('/carts/:cartID/status', cartController.updateCartStatus);
+
 module.exports = router;

@@ -10,20 +10,13 @@ import { useNavigate } from 'react-router-dom';
 const { Meta } = Card;
 const { Option } = Select;
 
-const categories = [
-  { label: 'All', value: 'All' },
-  { label: 'Smartphones', value: 'Smartphones' },
-  { label: 'Laptops', value: 'Laptops' },
-  { label: 'Tablets', value: 'Tablets' },
-  { label: 'Audio', value: 'Audio' },
-  { label: 'Wearables', value: 'Wearables' },
-  { label: 'Entertainment', value: 'Entertainment' },
-  { label: 'Accessories', value: 'Accessories' },
-  { label: 'Desktops', value: 'Desktops' },
-];
-
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/products');
+  return data;
+};
+
+const fetchCategories = async () => {
+  const { data } = await axiosInstance.get('/categories');
   return data;
 };
 
@@ -34,9 +27,14 @@ const addToCartBE = async (credentials) => {
 
 export default function ProductsPage() {
   const navigate = useNavigate();
-  const { data: products, isLoading, error } = useQuery({
+  const { data: products, isLoading: isProductsLoading, error: productsError } = useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
+  });
+
+  const { data: categories, isLoading: isCategoriesLoading, error: categoriesError } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
   });
 
   const AddToCartApi = useMutation({
@@ -73,7 +71,7 @@ export default function ProductsPage() {
     ? products
     : products.filter(product => product.category === selectedCategory);
 
-  if (isLoading) {
+  if (isProductsLoading || isCategoriesLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Spin size="large" />
@@ -81,8 +79,8 @@ export default function ProductsPage() {
     );
   }
 
-  if (error) {
-    return <div className="text-red-500">Error fetching products: {error.message}</div>;
+  if (productsError || categoriesError) {
+    return <div className="text-red-500">Error fetching data: {productsError?.message || categoriesError?.message}</div>;
   }
 
   return (
@@ -93,9 +91,10 @@ export default function ProductsPage() {
           onChange={handleCategoryChange}
           style={{ width: 200 }}
         >
+          <Option key="All" value="All">All</Option>
           {categories.map(category => (
-            <Option key={category.value} value={category.value}>
-              {category.label}
+            <Option key={category._id} value={category.name}>
+              {category.name}
             </Option>
           ))}
         </Select>

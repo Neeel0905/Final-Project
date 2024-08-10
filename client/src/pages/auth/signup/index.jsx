@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Formik } from 'formik';
-import { Card, Button, Input, Form, Row, Col, message } from 'antd';
+import { Card, Button, Input, Form, Row, Col, message, Select } from 'antd';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { signupInitialValues, signupValidationSchema } from './formHelper';
 import axiosInstance from '../../../axiosInstance';
+
+const { Option } = Select;
 
 const signupUser = async (credentials) => {
   const { data } = await axiosInstance.post('/auth/signup', credentials);
@@ -30,7 +32,6 @@ const SignUpPage = () => {
       message.error(error.response?.data?.message || 'Sign-up failed');
     },
   });
-  
 
   const handleSubmit = (values) => {
     mutation.mutate(values);
@@ -40,11 +41,11 @@ const SignUpPage = () => {
     <div className="flex items-center justify-center min-h-screen">
       <Card title="Sign Up" style={{ width: 600 }}>
         <Formik
-          initialValues={signupInitialValues}
+          initialValues={{ ...signupInitialValues, userType: 'customer' }}
           validationSchema={signupValidationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values, handleChange, handleSubmit, errors, touched, isSubmitting }) => {
+          {({ values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting }) => {
             console.log(errors);
             return (
               <Form onFinish={handleSubmit} layout="vertical">
@@ -115,6 +116,22 @@ const SignUpPage = () => {
                 </Row>
 
                 <Form.Item
+                  label="User Type"
+                  validateStatus={errors.userType && touched.userType ? 'error' : ''}
+                  help={errors.userType && touched.userType ? errors.userType : ''}
+                >
+                  <Select
+                    name="userType"
+                    value={values.userType}
+                    onChange={(value) => setFieldValue('userType', value)}
+                    size="large"
+                  >
+                    <Option value="customer">Customer</Option>
+                    <Option value="admin">Admin</Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
                   label="Password"
                   validateStatus={errors.password && touched.password ? 'error' : ''}
                   help={errors.password && touched.password ? errors.password : ''}
@@ -158,7 +175,7 @@ const SignUpPage = () => {
         </Formik>
         <div style={{ textAlign: 'center', marginTop: '16px' }}>
           <span>Already have an account? </span>
-          <Button type="link" onClick={() => navigate('/login')}>Login</Button>
+          <Button type="link" onClick={() => navigate('/auth/login')}>Login</Button>
         </div>
       </Card>
     </div>
