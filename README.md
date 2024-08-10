@@ -18,9 +18,24 @@
 2. **Frontend Setup**: Initialized ReactJS project.
 3. **Backend Setup**: Initialized Node.js project with Express and connected to MongoDB (Atlas).
 
-## Install Dependencies
+## Credentials for app
+### Admin - ID
+```bash
+km@mailsac.com
+```
+### Admin - Password
+```bash
+T3sting1
+```
 
-To get started with this project, clone the repository and install the necessary dependencies.
+### Customer - ID
+```bash
+kc@mailsac.com
+```
+### Customer - Password
+```bash
+T3sting1
+```
 
 ### Cloning the Repository
 

@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginInitialValues, loginValidationSchema } from './formHelper';
 import axiosInstance from '../../../axiosInstance';
 import { useEffect } from 'react';
+import { jwtDecode } from '../../../utils/jwt-decode';
 
 const loginUser = async (credentials) => {
   const { data } = await axiosInstance.post('/auth/login', credentials);
@@ -26,7 +27,12 @@ const LoginPage = () => {
     onSuccess: (data) => {
       localStorage.setItem('accessToken', data.token);
       message.success('Login successful');
-      navigate('/dashboard/products');
+      const decode = jwtDecode(data.token);
+      if (decode?.userType === 'admin') {
+        navigate('/dashboard/admin');
+      } else {
+        navigate('/dashboard/products');
+      }
     },
     onError: (error) => {
       message.error(error.response?.data?.message || 'Login failed');

@@ -27,6 +27,8 @@ const addToCartBE = async (credentials) => {
 
 export default function ProductsPage() {
   const navigate = useNavigate();
+  const decode = jwtDecode(localStorage.getItem('accessToken'));
+
   const { data: products, isLoading: isProductsLoading, error: productsError } = useQuery({
     queryKey: ['products'],
     queryFn: fetchProducts,
@@ -120,28 +122,31 @@ export default function ProductsPage() {
               ]}
             >
               <Meta title={product.name} description={`$${product.price}`} />
-              <div className="mt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-                <Select
-                  defaultValue={1} // Start with 1
-                  style={{ width: '100%' }}
-                  onChange={(value) => handleQuantityChange(product._id, value)}
-                >
-                  {[...Array(10).keys()].map((value) => (
-                    <Option key={value + 1} value={value + 1}>
-                      {value + 1}
-                    </Option>
-                  ))}
-                </Select>
-                <Button
-                  type="primary"
-                  block
-                  className="mt-4"
-                  onClick={() => handleAddToCart(product._id)}
-                >
-                  Add to Cart
-                </Button>
-              </div>
+              {decode?.userType !== 'admin' && (
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                  <Select
+                    defaultValue={1} // Start with 1
+                    style={{ width: '100%' }}
+                    onChange={(value) => handleQuantityChange(product._id, value)}
+                  >
+                    {[...Array(10).keys()].map((value) => (
+                      <Option key={value + 1} value={value + 1}>
+                        {value + 1}
+                      </Option>
+                    ))}
+                  </Select>
+                  <Button
+                    type="primary"
+                    block
+                    className="mt-4"
+                    onClick={() => handleAddToCart(product._id)}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+              )}
             </Card>
           </Col>
         ))}

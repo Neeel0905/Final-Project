@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, InputNumber, Row, Col, Divider, Typography, Card } from 'antd';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -24,6 +24,13 @@ const removeCartItem = async (cartItemId) => {
 
 export default function CartViewPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const decode = jwtDecode(localStorage.getItem('accessToken'));
+    if (decode?.userType === 'admin') {
+      navigate('/dashboard/admin');
+    }
+  }, []);
 
   const { data = {}, isLoading, refetch } = useQuery({
     queryKey: ['cartItems'],
