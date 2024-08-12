@@ -25,8 +25,6 @@ export default function CheckoutPage() {
     const decode = jwtDecode(localStorage.getItem('accessToken'));
     if (decode?.userType === 'admin') {
       navigate('/dashboard/admin');
-    } else if (state?.cartID) {
-      navigate('/dashboard/cart');
     }
   }, []);
 

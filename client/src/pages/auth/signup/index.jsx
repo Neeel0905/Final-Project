@@ -45,8 +45,7 @@ const SignUpPage = () => {
           validationSchema={signupValidationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values, handleChange, handleSubmit, setFieldValue, errors, touched, isSubmitting }) => {
-            console.log(errors);
+          {({ values, handleChange, handleSubmit, setFieldValue, errors, touched }) => {
             return (
               <Form onFinish={handleSubmit} layout="vertical">
                 <Row gutter={16}>
@@ -163,7 +162,7 @@ const SignUpPage = () => {
                   <Button 
                     type="primary" 
                     htmlType="submit" 
-                    loading={isSubmitting || mutation.isPending} 
+                    loading={mutation.isPending} 
                     block
                     size="large"
                   >

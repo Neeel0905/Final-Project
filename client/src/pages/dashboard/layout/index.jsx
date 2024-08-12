@@ -27,13 +27,13 @@ export default function DashboardLayout() {
   return (
     <Layout className="min-h-screen flex flex-col">
       <Header className="px-5 flex items-center justify-between">
-        <div className="text-white text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>
+        <div className="text-white text-xl font-bold">
           ND
         </div>
         <Menu 
           theme="dark" 
-          mode="horizontal" 
-          defaultSelectedKeys={['/dashboard/products']} 
+          mode="horizontal"
+          defaultSelectedKeys={[decoded.userType === 'admin' ? '/dashboard/admin' : '/dashboard/products']} 
           className="flex-1 ml-6"
           onClick={(e) => navigate(e.key)}
         >
