@@ -51,6 +51,11 @@ npm install
 cd ..
 cd server
 npm install
+
+```
+#### or
+```bash
+npm run clean-install
 ```
 
 ### Running the Application
