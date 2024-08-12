@@ -34,7 +34,7 @@ kc@mailsac.com
 ```
 ### Customer - Password
 ```bash
-T3sting1
+T3sting1@
 ```
 
 ### Cloning the Repository

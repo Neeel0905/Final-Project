@@ -51,7 +51,7 @@ const LoginPage = () => {
           validationSchema={loginValidationSchema}
           onSubmit={handleSubmit}
         >
-          {({ values, handleChange, handleSubmit, errors, touched, isSubmitting }) => (
+          {({ values, handleChange, handleSubmit, errors, touched }) => (
             <Form onFinish={handleSubmit} layout="vertical">
               <Form.Item
                 label="Email"
@@ -85,7 +85,7 @@ const LoginPage = () => {
                 <Button 
                   type="primary" 
                   htmlType="submit" 
-                  loading={isSubmitting || mutation.isLoading} 
+                  loading={mutation.isPending} 
                   block
                   size="large"
                 >
