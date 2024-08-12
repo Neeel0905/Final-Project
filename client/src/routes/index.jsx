@@ -17,6 +17,7 @@ export default function Router() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
+        <Route index element={<Navigate to="/auth/login" replace />} />
         <Route path="auth" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
